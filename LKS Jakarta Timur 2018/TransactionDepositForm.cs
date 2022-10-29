@@ -15,6 +15,7 @@ namespace LKS_Jakarta_Timur_2018
     {
         private int customerId = -1;
         private DateTime? estimationDateTime = null;
+        private DataGridViewRowCollection data;
         public TransactionDepositForm()
         {
             InitializeComponent();
@@ -161,14 +162,23 @@ namespace LKS_Jakarta_Timur_2018
 
                     db.HeaderDeposits.InsertOnSubmit(headerDeposit);
                     db.SubmitChanges();
+                    Support.msi("Insert Success!");
 
                     for (int i = 0; i < dgv.Rows.Count; i++)
                     {
-                        Customer cus = new Customer();
-                        cus.Id = customerId;
-                        cus.Name = nameChange.Text;
-                        cus.PhoneNumber = txtPhoneNumber.Text;
-                        cus.Address = addressChange.Text;
+                        DetailDeposit detailDeposit = new DetailDeposit();
+                        Service service = new Service();
+
+                        detailDeposit.IdDeposit = headerDeposit.Id;
+                        detailDeposit.IdService = service.Id;
+
+                        detailDeposit.PriceUnit = int.Parse(txtPricePerUnit.Text);
+                        detailDeposit.TotalUnit = double.Parse(data[i].Cells[3].Value.ToString());
+                        detailDeposit.CompleteDatetime = null;
+                        
+                        db.DetailDeposits.InsertOnSubmit(detailDeposit);
+                        db.SubmitChanges();
+                        Support.msi("Insert Success!");
                     }
                 }
             }
