@@ -170,7 +170,7 @@ namespace LKS_Jakarta_Timur_2018
                         Service service = new Service();
 
                         detailDeposit.IdDeposit = headerDeposit.Id;
-                        detailDeposit.IdService = service.Id;
+                        detailDeposit.IdService = int.Parse(data[i].Cells[6].Value.ToString());
 
                         detailDeposit.PriceUnit = int.Parse(txtPricePerUnit.Text);
                         detailDeposit.TotalUnit = double.Parse(data[i].Cells[3].Value.ToString());
