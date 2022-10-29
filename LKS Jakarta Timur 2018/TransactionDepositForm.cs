@@ -69,8 +69,6 @@ namespace LKS_Jakarta_Timur_2018
         {
             if (e.KeyCode == Keys.Enter)
             {
-                Support.msi("Enter Pressed!");
-
                 DataClasses1DataContext db = new DataClasses1DataContext();
                 Customer cus = db.Customers.Where(x => x.PhoneNumber.Equals(txtPhoneNumber.Text)).FirstOrDefault();
                 if (cus != null)
@@ -97,16 +95,6 @@ namespace LKS_Jakarta_Timur_2018
 
         int segundo = 0;
         DateTime dt = new DateTime();
-
-        private void currentTime_Click(object sender, EventArgs e)
-        {
-            DateTime dayLeft = DateTime.Parse("1/1/2012 12:00:01 AM");
-            DateTime startDate = DateTime.Now;
-
-            TimeSpan t = dayLeft - startDate;
-            string countDown = string.Format("{0} Days, {1} Hours, {2} Minutes, {3} Seconds till launch.", 
-                t.Days, t.Hours, t.Seconds);
-        }
 
         private void generateTotal()
         {
@@ -137,8 +125,6 @@ namespace LKS_Jakarta_Timur_2018
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
-            segundo++;
-            currentTime.Text = dt.AddSeconds(segundo).ToString("HH:mm:ss");
             currentTime.Text = $"Current time : {DateTime.Now.ToString("dd-MMM-yy HH:mm:ss")}";
         }
 
@@ -162,24 +148,25 @@ namespace LKS_Jakarta_Timur_2018
 
                     db.HeaderDeposits.InsertOnSubmit(headerDeposit);
                     db.SubmitChanges();
-                    Support.msi("Insert Success!");
+                    
 
                     for (int i = 0; i < dgv.Rows.Count; i++)
                     {
                         DetailDeposit detailDeposit = new DetailDeposit();
-                        Service service = new Service();
+         
 
                         detailDeposit.IdDeposit = headerDeposit.Id;
-                        detailDeposit.IdService = int.Parse(data[i].Cells[6].Value.ToString());
+                        detailDeposit.IdService = int.Parse(dgv.Rows[i].Cells[6].Value.ToString());
 
                         detailDeposit.PriceUnit = int.Parse(txtPricePerUnit.Text);
-                        detailDeposit.TotalUnit = double.Parse(data[i].Cells[3].Value.ToString());
+                        detailDeposit.TotalUnit = double.Parse(dgv.Rows[i].Cells[3].Value.ToString());
                         detailDeposit.CompleteDatetime = null;
                         
                         db.DetailDeposits.InsertOnSubmit(detailDeposit);
                         db.SubmitChanges();
-                        Support.msi("Insert Success!");
+                        
                     }
+                    Support.msi("Insert Success!");
                 }
             }
             catch (Exception ex)

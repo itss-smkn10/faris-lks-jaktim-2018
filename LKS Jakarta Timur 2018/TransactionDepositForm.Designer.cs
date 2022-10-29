@@ -227,7 +227,6 @@
             this.currentTime.Size = new System.Drawing.Size(172, 29);
             this.currentTime.TabIndex = 8;
             this.currentTime.Text = "Current Time : ";
-            this.currentTime.Click += new System.EventHandler(this.currentTime_Click);
             // 
             // totalPay
             // 
